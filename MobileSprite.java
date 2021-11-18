@@ -1,13 +1,14 @@
+import java.util.ArrayList;
 
 public class MobileSprite extends Sprite
 {
   private double vx;
   private double vy;
 
-  public MobileSprite(double left, double top, int width, int height, String image, String location,
+  public MobileSprite(double left, double top, int width, int height, String image, ArrayList<Location> shipLocations, ArrayList<Location> treasureLocations,
                       double velocityX, double velocityY)
   {
-    super(left, top, width, height, image, location);
+    super(left, top, width, height, image, null,null);
     vx = velocityX;
     vy = velocityY;
 

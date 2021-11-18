@@ -10,16 +10,18 @@ public class Sprite
   private double top;   //the y-coordinate of the top edge of the sprite
   private int width;
   private int height;
-  private String locations;
+  private ArrayList<Location> shipLocations;
+  private ArrayList<Location> treasureLocations;
   private String image;
 
-  public Sprite(double theLeft, double theTop, int theWidth, int theHeight, String theImage, String locations)
+  public Sprite(double theLeft, double theTop, int theWidth, int theHeight, String theImage, ArrayList<Location> shipLocations, ArrayList<Location> treasureLocations)
   {
     left = theLeft;
     top = theTop;
     width = theWidth;
     height = theHeight;
-    this.locations = locations;
+    this.shipLocations = shipLocations;
+    this.treasureLocations = treasureLocations;
     setImage(theImage);
   }
 
@@ -150,8 +152,8 @@ public class Sprite
     image = i;
   }
 
-  public void getLocations(String locations)
-  {this.locations = locations; }
+  //public void getLocations(ArrayList<Location> shipLocations, ArrayList<Location> treasureLocations)
+  //{this.shipLocations = shipLocations; this.treasureLocations = treasureLocations; }
 
   public void step(World world)
   {

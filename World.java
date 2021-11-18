@@ -45,9 +45,9 @@ public class World
       int y = (int)(Math.random()*height);
       s.newRound(players.size(),x,y,width,height);
       s.setIndex(i);
-      sprites.add(new Ship(50, 50, 50, 50, shipImageName, null, s));
+      sprites.add(new Ship(50, 50, 50, 50, shipImageName, s, null,null));
     }
-    sprites.add(new SpaceTreasure( 300,500,50,50,treasureImageName,null));
+    sprites.add(new SpaceTreasure( 300,500,50,50,treasureImageName,null, null));
     //sprites.add(new SpaceTreasure( 150,150,50,50,treasureImageName,null));
 
 
@@ -63,28 +63,29 @@ public class World
     //sprites.add(new SpaceTreasure((int)(Math.random()*getWidth()),(int)(Math.random()*getHeight()),50,50,treasureImageName, null));
 
 
-    StringBuilder shipLocs = new StringBuilder();
-    StringBuilder tresureLocs = new StringBuilder();
+    ArrayList<Location> shipLocs = new ArrayList<>();
+    ArrayList<Location> treasuresLocs = new ArrayList<>();
 
     ArrayList<Sprite> treasures = new ArrayList<>();
 
-    for (Sprite s : sprites) {
-      if (s.getImage().equals(shipImageName))
-        shipLocs.append(s.getLeft()).append(",").append(s.getTop()).append(";");
-      if (s.getImage().equals(treasureImageName)) {
-        treasures.add(s);
-        tresureLocs.append(s.getLeft()).append(",").append(s.getTop()).append(";");
+
+    for (Sprite sprite : sprites) {
+      if (sprite.getImage().equals(shipImageName)) {
+        shipLocs.add(new Location((int) sprite.getTop(), (int) sprite.getLeft()));
+      }
+      if (sprite.getImage().equals(treasureImageName)) {
+        treasuresLocs.add(new Location((int)sprite.getTop(), (int)sprite.getLeft()));
+        treasures.add(sprite);
       }
     }
 
-    StringBuilder locs = shipLocs.append(";").append(tresureLocs);
 
     for (int i = 0; i < sprites.size(); i++)
     {
       Sprite s = sprites.get(i);
       s.step(this);
       if(s.getImage().equals(shipImageName)) {
-        s.getLocations(locs.toString());
+        ((Ship)s).getLocations(shipLocs,treasuresLocs);
         for(Sprite t: treasures)
           if(s.touching(t))
             sprites.remove(t);
@@ -114,7 +115,7 @@ public class World
 
   public void mouseClicked(int x, int y)
   {
-    sprites.add(new SpaceTreasure( x,y,50,50,treasureImageName,null));
+    sprites.add(new SpaceTreasure( x,y,50,50,treasureImageName,null,null));
     System.out.println("mouseClicked:  " + x + ", " + y);
   }
   

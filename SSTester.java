@@ -4,7 +4,7 @@ public class SSTester implements Stratagy
 {
     private int index;
 
-    private Location[] otherShipsSpots;
+    private ArrayList<Location> otherShipsSpots;
     private ArrayList<Location> treasureSpots;
     private int x;
     private int y;
@@ -13,7 +13,7 @@ public class SSTester implements Stratagy
 
     @Override
     public void newRound(int numberofOpponents, int x, int y, int worldX, int worldY) {
-        otherShipsSpots = new Location[numberofOpponents];
+        otherShipsSpots = new ArrayList<>();
         treasureSpots = new ArrayList<>();
         this.x = x;
         this.y = y;
@@ -22,17 +22,23 @@ public class SSTester implements Stratagy
     }
 
     @Override
-    public void getLocations(Location[] playersSpots, ArrayList<Location> treasureSpots) {
+    public void getLocations(ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots) {
         //TODO just move arraylist
-        this.otherShipsSpots = otherShipsSpots;
+        this.otherShipsSpots = playersSpots;
         this.treasureSpots = treasureSpots;
 
-        x = otherShipsSpots[index].getCol();
-        y = otherShipsSpots[index].getRow();
+        System.out.println(index);
+
+        x = otherShipsSpots.get(index).getCol();
+        y = otherShipsSpots.get(index).getRow();
     } //DO NOT EDIT
 
     @Override
     public Location move() {
+        if(treasureSpots.size()>0)
+            System.out.println(treasureSpots.get(0).toString());
+        else
+            System.out.println("bruh");
         //return location of where you want to move to
         //keep in mind that your ships spot is included in otherShipSpots
         //write code here:
