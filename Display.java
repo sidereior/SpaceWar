@@ -1,5 +1,8 @@
+//hello
+
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -10,8 +13,9 @@ import javax.swing.*;
 public class Display extends JComponent implements KeyListener, MouseListener
 {
   private static Map<String, Image> images = new HashMap<String, Image>();
-  
-  public static Image getImage(String name)
+  private static final int PRIMARY = 0;
+  private static final int SECONDARY = 0;
+  public static Image getImage(String name, Color[] colors)
   {
     try
     {
@@ -21,8 +25,21 @@ public class Display extends JComponent implements KeyListener, MouseListener
         URL url = Display.class.getResource(name);
         if (url == null)
           throw new RuntimeException("unable to load image:  " + name);
-        image = ImageIO.read(url);
-        images.put(name, image);
+        BufferedImage uncolored = ImageIO.read(url);
+        Graphics graphics = uncolored.getGraphics();
+        for(int i = 0; i < uncolored.getWidth(); i++) {
+          for(int j = 0; j < uncolored.getHeight(); i++) {
+            if(uncolored.getRGB(i, j) == PRIMARY) {
+              graphics.setColor(colors[0]);
+              graphics.fillRect(i, j, 1, 1);
+            }
+            else if(uncolored.getRGB(i, j) == SECONDARY) {
+              graphics.setColor(colors[1]);
+              graphics.fillRect(i, j, 1, 1);
+            }
+          }
+        }
+        images.put(name, uncolored);
       }
       return image;
     }

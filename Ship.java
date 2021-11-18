@@ -7,18 +7,19 @@ public class Ship extends Sprite{
     private double vy;
     private Stratagy stratagy;
 
-    public Ship(double left, double top, int width, int height, String image, Stratagy s, ArrayList<Location> shipLocations, ArrayList<Location> treasureLocations)
+    public Ship(double left, double top, int width, int height, String image, String location, Stratagy s)
     {
         //super();
-        super(left, top, width, height, image, shipLocations,treasureLocations);
+        super(left, top, width, height, image, location);
         stratagy = s;
         vx = 0;
         vy = 0;
 
     }
 
-    public void getLocations(ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots)
+    public void getLocations(Location[] playersSpots, ArrayList<Location> treasureSpots)
     {
+
         //TODO only give objects within a certain radius!!!!
         stratagy.getLocations(playersSpots, treasureSpots);
     }
