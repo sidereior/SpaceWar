@@ -22,22 +22,11 @@ public class SSTester implements Stratagy
     }
 
     @Override
-    public void getLocations(String locations) {
+    public void getLocations(Location[] playersSpots, ArrayList<Location> treasureSpots) {
         //TODO just move arraylist
-        treasureSpots = new ArrayList<>();
-        int semis = locations.indexOf(";;");
-        String ships = locations.substring(0,semis);
-        String treasures = locations.substring(semis+1,locations.length()-1);
-        String[] otherShipsSpotsString = ships.split(";");
-        String[] otherTreasuresSpotsString = new String[0];
-        if(treasures.length()>1)
-           otherTreasuresSpotsString = treasures.split(";");
-        for(int i = 0; i< otherShipsSpotsString.length; i++)
-            otherShipsSpots[i] = Location.StringToLocation(otherShipsSpotsString[i]);
-        //#ImATerribleCoder ;)
-        for(int i = 1; i< otherTreasuresSpotsString.length; i++) {
-            treasureSpots.add(Location.StringToLocation(otherTreasuresSpotsString[i]));
-        }
+        this.otherShipsSpots = otherShipsSpots;
+        this.treasureSpots = treasureSpots;
+
         x = otherShipsSpots[index].getCol();
         y = otherShipsSpots[index].getRow();
     } //DO NOT EDIT

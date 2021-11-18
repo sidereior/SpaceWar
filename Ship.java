@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Ship extends Sprite{
     final double speed = 2;
 
@@ -15,9 +17,11 @@ public class Ship extends Sprite{
 
     }
 
-    public void getLocations(String locations)
+    public void getLocations(Location[] playersSpots, ArrayList<Location> treasureSpots)
     {
-        stratagy.getLocations(locations);
+
+        //TODO only give objects within a certain radius!!!!
+        stratagy.getLocations(playersSpots, treasureSpots);
     }
 
 

@@ -1,9 +1,11 @@
+import java.util.ArrayList;
+
 public interface Stratagy
 {
 
   void newRound(int numberofOpponents, int x, int y, int worldX, int worldY);
 
-  void getLocations(String locations);
+  void getLocations(Location[] playersSpots, ArrayList<Location> treasureSpots);
 
   public Location move();
 
