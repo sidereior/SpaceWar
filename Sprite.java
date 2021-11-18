@@ -12,8 +12,9 @@ public class Sprite
   private int height;
   private String locations;
   private String image;
+  private Color[] colors;
 
-  public Sprite(double theLeft, double theTop, int theWidth, int theHeight, String theImage, String locations)
+  public Sprite(double theLeft, double theTop, int theWidth, int theHeight, String theImage, String locations, Color[] colors)
   {
     left = theLeft;
     top = theTop;
@@ -21,6 +22,7 @@ public class Sprite
     height = theHeight;
     this.locations = locations;
     setImage(theImage);
+    setColors(colors);
   }
 
   public Sprite() {
@@ -145,10 +147,14 @@ public class Sprite
     return image;
   }
 
+  public Color[] getColors() { return colors; }
+
   public void setImage(String i)
   {
     image = i;
   }
+
+  public void setColors(Color[] c) { c = colors; }
 
   public void getLocations(String locations)
   {this.locations = locations; }

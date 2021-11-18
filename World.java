@@ -140,7 +140,7 @@ public class World
     for (int i = 0; i < sprites.size(); i++)
     {
       Sprite sprite = sprites.get(i);
-      g.drawImage(Display.getImage(sprite.getImage()),
+      g.drawImage(Display.getImage(sprite.getImage(), sprite.getColors()),
                   (int)sprite.getLeft(), (int)sprite.getTop(),
                   sprite.getWidth(), sprite.getHeight(), null);
     }

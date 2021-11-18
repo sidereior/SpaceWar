@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Ship extends Sprite{
@@ -10,7 +11,7 @@ public class Ship extends Sprite{
     public Ship(double left, double top, int width, int height, String image, String location, Stratagy s)
     {
         //super();
-        super(left, top, width, height, image, location);
+        super(left, top, width, height, image, location, new Color[] {Color.RED, Color.PINK});
         stratagy = s;
         vx = 0;
         vy = 0;
