@@ -1,5 +1,6 @@
 public class Player
 {
+  //testing
   private Stratagy strategy;
   private int roundsWon;
   private int roundsLost;
