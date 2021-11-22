@@ -10,16 +10,31 @@ public class Sprite
   private double top;   //the y-coordinate of the top edge of the sprite
   private int width;
   private int height;
-  private String locations;
   private String image;
+  private ArrayList<Location> playersSpots;
+  private ArrayList<Location> treasureSpots;
 
-  public Sprite(double theLeft, double theTop, int theWidth, int theHeight, String theImage, String locations)
+  public Sprite(double theLeft, double theTop, int theWidth, int theHeight, String theImage, ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots)
   {
     left = theLeft;
     top = theTop;
     width = theWidth;
     height = theHeight;
-    this.locations = locations;
+    this.playersSpots = playersSpots;
+    this.treasureSpots = treasureSpots;
+
+    setImage(theImage);
+  }
+
+  public Sprite(double theLeft, double theTop, int theWidth, int theHeight, String theImage, ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots, Color color)
+  {
+    left = theLeft;
+    top = theTop;
+    width = theWidth;
+    height = theHeight;
+    this.playersSpots = playersSpots;
+    this.treasureSpots = treasureSpots;
+
     setImage(theImage);
   }
 
@@ -150,11 +165,16 @@ public class Sprite
     image = i;
   }
 
-  public void getLocations(String locations)
-  {this.locations = locations; }
+  public void getLocations(ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots)
+  {this.playersSpots = playersSpots;
+    this.treasureSpots = treasureSpots; }
 
   public void step(World world)
   {
     //do NOT insert any code here
+  }
+
+  public Color[] getColors() {
+    return new Color[]{new Color(0xF00BF3)};
   }
 }

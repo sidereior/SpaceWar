@@ -45,7 +45,7 @@ public class World
       int y = (int)(Math.random()*height);
       s.newRound(players.size(),x,y,width,height);
       s.setIndex(i);
-      sprites.add(new Ship(50, 50, 50, 50, shipImageName, s, null,null));
+      sprites.add(new Ship(50, 50, 50, 50, shipImageName,s, null,null));
     }
     sprites.add(new SpaceTreasure( 300,500,50,50,treasureImageName,null, null));
     //sprites.add(new SpaceTreasure( 150,150,50,50,treasureImageName,null));
