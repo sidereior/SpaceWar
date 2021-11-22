@@ -1,8 +1,5 @@
-//hello
-
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -10,12 +7,12 @@ import java.util.concurrent.*;
 import javax.imageio.*;
 import javax.swing.*;
 
-public class Display extends JComponent implements KeyListener, MouseListener
+public class Display extends JComponent implements KeyListener, MouseListener, MouseMotionListener
 {
+
   private static Map<String, Image> images = new HashMap<String, Image>();
-  private static final int PRIMARY = 0;
-  private static final int SECONDARY = 0;
-  public static Image getImage(String name, Color[] colors)
+
+  public static Image getImage(String name)
   {
     try
     {
@@ -25,21 +22,8 @@ public class Display extends JComponent implements KeyListener, MouseListener
         URL url = Display.class.getResource(name);
         if (url == null)
           throw new RuntimeException("unable to load image:  " + name);
-        BufferedImage uncolored = ImageIO.read(url);
-        Graphics graphics = uncolored.getGraphics();
-        for(int i = 0; i < uncolored.getWidth(); i++) {
-          for(int j = 0; j < uncolored.getHeight(); i++) {
-            if(uncolored.getRGB(i, j) == PRIMARY) {
-              graphics.setColor(colors[0]);
-              graphics.fillRect(i, j, 1, 1);
-            }
-            else if(uncolored.getRGB(i, j) == SECONDARY) {
-              graphics.setColor(colors[1]);
-              graphics.fillRect(i, j, 1, 1);
-            }
-          }
-        }
-        images.put(name, uncolored);
+        image = ImageIO.read(url);
+        images.put(name, image);
       }
       return image;
     }
@@ -48,24 +32,25 @@ public class Display extends JComponent implements KeyListener, MouseListener
       throw new RuntimeException(e);
     }
   }
-  
+  private int mouseMoveX;
+  private int mouseMoveY;
   private JFrame frame;
   private int mouseX;
   private int mouseY;
   private World world;
   private Queue<KeyEvent> keys;
-  
+
   public Display(final int width, final int height)
   {
     keys = new ConcurrentLinkedQueue<KeyEvent>();
     mouseX = -1;
     mouseY = -1;
-    
+
     try
     {
       SwingUtilities.invokeAndWait(new Runnable() { public void run() {
         world = new World(width, height);
-        
+
         frame = new JFrame();
         frame.setTitle("World");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,8 +60,9 @@ public class Display extends JComponent implements KeyListener, MouseListener
         requestFocusInWindow();
         addKeyListener(Display.this);
         addMouseListener(Display.this);
+        addMouseMotionListener(Display.this);
         frame.getContentPane().add(Display.this);
-        
+
         frame.pack();
         frame.setVisible(true);
       }});
@@ -86,7 +72,7 @@ public class Display extends JComponent implements KeyListener, MouseListener
       throw new RuntimeException(e);
     }
   }
-  
+
   public void paintComponent(Graphics g)
   {
     try
@@ -99,7 +85,7 @@ public class Display extends JComponent implements KeyListener, MouseListener
       setVisible(false);  //stop drawing so we don't keep getting the same error
     }
   }
-  
+
   public void run()
   {
     while (true)
@@ -108,7 +94,7 @@ public class Display extends JComponent implements KeyListener, MouseListener
       world.stepAll();
       repaint();
       try { Thread.sleep(10); } catch(Exception e) { }
-      
+
       while (!keys.isEmpty())
       {
         KeyEvent event = keys.poll();
@@ -119,50 +105,71 @@ public class Display extends JComponent implements KeyListener, MouseListener
         else
           throw new RuntimeException("Unexpected event type:  " + event.getID());
       }
-      
+
       if (mouseX != -1)
       {
         world.mouseClicked(mouseX, mouseY);
         mouseX = -1;
         mouseY = -1;
       }
+      //world.mouseMoved(mouseMoveX,mouseMoveY);
     }
   }
-  
+
   public void keyPressed(KeyEvent e)
   {
     keys.add(e);
   }
-  
+
   public void keyReleased(KeyEvent e)
   {
     keys.add(e);
   }
-  
+
   public void keyTyped(KeyEvent e)
   {
     //ignored
   }
-  
+
   public void mousePressed(MouseEvent e)
   {
     mouseX = e.getX();
     mouseY = e.getY();
   }
-  
+
   public void mouseReleased(MouseEvent e)
   {
   }
-  
+
   public void mouseClicked(MouseEvent e)
   {
   }
-  
+
   public void mouseEntered(MouseEvent e)
   {
   }
-  
+
   public void mouseExited(MouseEvent e)
   {
+  }
+
+  @Override
+  public void mouseDragged(MouseEvent e) {
+
+  }
+
+  public double getMouseX(){
+    return mouseMoveX;
+  }
+  public double getMouseY(){
+    return mouseMoveY;
+  }
+  @Override
+  public void mouseMoved(MouseEvent e) {
+    mouseMoveX = e.getX();
+    mouseMoveY = e.getY();
+    //System.out.println("mouse move in display: " + mouseMoveX);
+
+
   }
 }

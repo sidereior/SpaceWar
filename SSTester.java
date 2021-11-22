@@ -27,7 +27,7 @@ public class SSTester implements Stratagy
         this.otherShipsSpots = playersSpots;
         this.treasureSpots = treasureSpots;
 
-        System.out.println(index);
+       //System.out.println(index);
 
         x = otherShipsSpots.get(index).getCol();
         y = otherShipsSpots.get(index).getRow();
@@ -35,10 +35,10 @@ public class SSTester implements Stratagy
 
     @Override
     public Location move() {
-        if(treasureSpots.size()>0)
-            System.out.println(treasureSpots.get(0).toString());
-        else
-            System.out.println("bruh");
+        //if(treasureSpots.size()>0)
+            //System.out.println(treasureSpots.get(0).toString());
+        //else
+            //System.out.println("bruh");
         //return location of where you want to move to
         //keep in mind that your ships spot is included in otherShipSpots
         //write code here:
@@ -62,8 +62,8 @@ public class SSTester implements Stratagy
 
 
         if(j!=-1) {
-            System.out.println("moving from (" + x + "," + y + ") to " + treasureSpots.get(j).toString());
-            System.out.println(treasureSpots.get(j).toString());
+            //System.out.println("moving from (" + x + "," + y + ") to " + treasureSpots.get(j).toString());
+            //System.out.println(treasureSpots.get(j).toString());
             return treasureSpots.get(j);
         }
         else

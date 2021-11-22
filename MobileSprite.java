@@ -9,10 +9,10 @@ public class MobileSprite extends Sprite
     private double vx;
     private double vy;
 
-    public MobileSprite(double left, double top, int width, int height, String image, String location, Color[] colors, 
+    public MobileSprite(double left, double top, int width, int height, String image, ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots,
     double velocityX, double velocityY)
     {
-        super(left, top, width, height, image, location, colors);
+        super(left, top, width, height, image, playersSpots, treasureSpots);
         vx = velocityX;
         vy = velocityY;
 
