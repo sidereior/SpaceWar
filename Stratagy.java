@@ -13,5 +13,9 @@ public interface Stratagy
 
   void setIndex(int index);
 
+  int getX();
+
+  int getY();
+
 
 }

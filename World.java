@@ -1,43 +1,26 @@
 import java.awt.*;
-import java.awt.event.*;
 import java.util.*;
-import javax.swing.*;
 
 public class World
 {
-  final String shipImageName = "circle.png";
+  final String shipImageName = "circleBlue.png";
   final String treasureImageName = "triangle.png";
 
-  public static void main(String[] args)
-  {
-      run();
-  }
-  
-  public static void run()
-  {
-    Display display = new Display(1300, 700);
-    display.run();
-  }
-  
+  ArrayList<Stratagy> players;
+
   private ArrayList<Sprite> sprites;
   private final int width;
   private final int height;
-  
-  public World(int w, int h)
+
+
+
+  public World(int w, int h, ArrayList<Stratagy> players)
   {
     width = w;
     height = h;
+    this.players = players;
     
     sprites = new ArrayList<>();
-    double dir;
-
-
-    ArrayList<Stratagy> players = new ArrayList<>();
-
-    Stratagy tester = new SSTester();
-    players.add(tester);
-
-
 
     for(int i = 0; i<players.size(); i++) {
       Stratagy s = players.get(i);
@@ -45,9 +28,9 @@ public class World
       int y = (int)(Math.random()*height);
       s.newRound(players.size(),x,y,width,height);
       s.setIndex(i);
-      sprites.add(new Ship(50, 50, 50, 50, shipImageName,s, null,null));
+      sprites.add(new Ship(Math.random()*width, Math.random()*height, 50, 50, shipImageName,s, null,null));
     }
-    sprites.add(new SpaceTreasure( 300,500,50,50,treasureImageName,null, null));
+    //sprites.add(new SpaceTreasure( 300,500,50,50,treasureImageName,null, null));
     //sprites.add(new SpaceTreasure( 150,150,50,50,treasureImageName,null));
 
 
@@ -57,8 +40,8 @@ public class World
   
   public void stepAll()
   {
-//    if(Math.random()<.003)
-//      sprites.add(new SpaceTreasure( 400,100,50,50,treasureImageName,null));
+    //if(Math.random()<.03)
+    //  sprites.add(new SpaceTreasure( Math.random()*width, Math.random()*height,50,50,treasureImageName,null, null));
 
     //sprites.add(new SpaceTreasure((int)(Math.random()*getWidth()),(int)(Math.random()*getHeight()),50,50,treasureImageName, null));
 
@@ -136,6 +119,7 @@ public class World
 
   public void paintComponent(Graphics g)
   {
+
     g.setColor(Color.BLACK);
     g.fillRect(0, 0, width, height);
     for (int i = 0; i < sprites.size(); i++)
@@ -148,6 +132,19 @@ public class World
               (int)sprite.getLeft(),
               (int)sprite.getTop(),
               sprite.getWidth(), sprite.getHeight(), null);
+      g.setColor(Color.WHITE);
+      g.drawString("(" +  (int)sprite.getLeft() + ", " + (int)sprite.getTop() + ")",
+              (int)sprite.getLeft(),
+              (int)sprite.getTop()-sprite.getWidth());
+      if(sprite.getImage().equals(shipImageName))
+        for(Stratagy s: players)
+          if(sprite.getLeft()!=s.getX() && sprite.getTop()!=s.getY() &&   sprite.touching(s.getX(),s.getY()))
+            g.drawString("touching",
+                    (int)sprite.getLeft(),
+                    (int)sprite.getTop()+sprite.getWidth());
+
+
+
     }
   }
 }

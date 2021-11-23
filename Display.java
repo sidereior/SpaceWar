@@ -38,18 +38,20 @@ public class Display extends JComponent implements KeyListener, MouseListener, M
   private int mouseX;
   private int mouseY;
   private World world;
+  private ArrayList<Stratagy> players;
   private Queue<KeyEvent> keys;
 
-  public Display(final int width, final int height)
+  public Display(final int width, final int height, ArrayList<Stratagy> players)
   {
     keys = new ConcurrentLinkedQueue<KeyEvent>();
     mouseX = -1;
     mouseY = -1;
+    this.players = players;
 
     try
     {
       SwingUtilities.invokeAndWait(new Runnable() { public void run() {
-        world = new World(width, height);
+        world = new World(width, height, players); //TODO not good coding practice?
 
         frame = new JFrame();
         frame.setTitle("World");
