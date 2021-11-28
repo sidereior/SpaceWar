@@ -128,7 +128,7 @@ public class World
 //      g.drawImage(Display.getImage(sprite.getImage(), sprite.getColors()),
 //                  (int)sprite.getLeft(), (int)sprite.getTop(),
 //                  sprite.getWidth(), sprite.getHeight(), null);
-      g.drawImage(Display.getImage(sprite.getImage()),
+      g.drawImage(Display.getImage(sprite.getImage(), sprite.getColors()),
               (int)sprite.getLeft(),
               (int)sprite.getTop(),
               sprite.getWidth(), sprite.getHeight(), null);

@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -10,19 +11,28 @@ import javax.swing.*;
 public class Display extends JComponent implements KeyListener, MouseListener, MouseMotionListener
 {
 
-  private static Map<String, Image> images = new HashMap<String, Image>();
-
-  public static Image getImage(String name)
+  private static Map<String, BufferedImage> images = new HashMap<>();
+  private static final Color PRIMARY = Color.RED;
+  private static final Color SECONDARY = Color.GREEN;
+  public static Image getImage(String name, Color[] colors)
   {
     try
     {
-      Image image = images.get(name);
+      BufferedImage image = images.get(name);
       if (image == null)
       {
         URL url = Display.class.getResource(name);
         if (url == null)
           throw new RuntimeException("unable to load image:  " + name);
         image = ImageIO.read(url);
+        if(colors != null) {
+          for(int i = 0; i < image.getWidth(); i++) {
+            for (int j = 0; j < image.getHeight(); j++) {
+              if (image.getRGB(i, j) == PRIMARY.getRGB()) image.setRGB(i, j, colors[0].getRGB());
+              else if (image.getRGB(i, j) == SECONDARY.getRGB()) image.setRGB(i, j, colors[1].getRGB());
+            }
+          }
+        }
         images.put(name, image);
       }
       return image;
