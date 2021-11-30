@@ -26,12 +26,9 @@ public class SSTester implements Stratagy
         //TODO just move arraylist
         this.otherShipsSpots = playersSpots;
         this.treasureSpots = treasureSpots;
-
-       //System.out.println(index);
-
         x = otherShipsSpots.get(index).getCol();
         y = otherShipsSpots.get(index).getRow();
-    } //DO NOT EDIT
+    }
 
     @Override
     public Location move() {

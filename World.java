@@ -3,22 +3,24 @@ import java.util.*;
 
 public class World
 {
-  final String shipImageName = "circleBlue.png";
   final String treasureImageName = "triangle.png";
+  final String[] shipImageNames = new String[]{"CyanCircle.png", "PinkCircle.png", "PurpleCircle.png", "RedCircle.png","circleBlue.png"};
 
   ArrayList<Stratagy> players;
 
   private ArrayList<Sprite> sprites;
   private final int width;
   private final int height;
+  private int count;
 
 
 
-  public World(int w, int h, ArrayList<Stratagy> players)
+  public World(int w, int h, ArrayList<Stratagy> players)//
   {
     width = w;
     height = h;
     this.players = players;
+    count = 0;
     
     sprites = new ArrayList<>();
 
@@ -28,20 +30,23 @@ public class World
       int y = (int)(Math.random()*height);
       s.newRound(players.size(),x,y,width,height);
       s.setIndex(i);
-      sprites.add(new Ship(Math.random()*width, Math.random()*height, 50, 50, shipImageName,s, null,null));
+      sprites.add(new Ship(Math.random()*width, Math.random()*height, 50, 50, getImage(),s, null,null));
     }
     //sprites.add(new SpaceTreasure( 300,500,50,50,treasureImageName,null, null));
     //sprites.add(new SpaceTreasure( 150,150,50,50,treasureImageName,null));
+  }
 
-
-
-
+  public String getImage()
+  {
+    String s = shipImageNames[count];
+    count++;
+    return s;
   }
   
   public void stepAll()
   {
-    //if(Math.random()<.03)
-    //  sprites.add(new SpaceTreasure( Math.random()*width, Math.random()*height,50,50,treasureImageName,null, null));
+    //if(Math.random()<.003)
+    //  sprites.add(new SpaceTreasure(Math.random() * width, Math.random() * height, 50, 50, treasureImageName, null, null));
 
     //sprites.add(new SpaceTreasure((int)(Math.random()*getWidth()),(int)(Math.random()*getHeight()),50,50,treasureImageName, null));
 
@@ -53,13 +58,15 @@ public class World
 
 
     for (Sprite sprite : sprites) {
-      if (sprite.getImage().equals(shipImageName)) {
-        shipLocs.add(new Location((int) sprite.getTop(), (int) sprite.getLeft()));
-      }
+
       if (sprite.getImage().equals(treasureImageName)) {
         treasuresLocs.add(new Location((int)sprite.getTop(), (int)sprite.getLeft()));
         treasures.add(sprite);
       }
+      else {
+        shipLocs.add(new Location((int) sprite.getTop(), (int) sprite.getLeft()));
+      }
+
     }
 
 
@@ -67,7 +74,16 @@ public class World
     {
       Sprite s = sprites.get(i);
       s.step(this);
-      if(s.getImage().equals(shipImageName)) {
+      if(s.getImage().equals(treasureImageName)) {
+        // do nothuing
+      }
+      else
+      {
+
+
+
+
+
         ((Ship)s).getLocations(shipLocs,treasuresLocs);
         for(Sprite t: treasures)
           if(s.touching(t))
@@ -132,18 +148,47 @@ public class World
               (int)sprite.getLeft(),
               (int)sprite.getTop(),
               sprite.getWidth(), sprite.getHeight(), null);
+
       g.setColor(Color.WHITE);
-      g.drawString("(" +  (int)sprite.getLeft() + ", " + (int)sprite.getTop() + ")",
-              (int)sprite.getLeft(),
-              (int)sprite.getTop()-sprite.getWidth());
-      if(sprite.getImage().equals(shipImageName))
-        for(Stratagy s: players)
-          if(sprite.getLeft()!=s.getX() && sprite.getTop()!=s.getY() &&   sprite.touching(s.getX(),s.getY()))
-            g.drawString("touching",
-                    (int)sprite.getLeft(),
-                    (int)sprite.getTop()+sprite.getWidth());
 
+      if(sprite.getImage().equals(treasureImageName)) {//do nothing
+      }
+        else
+        {
+          for (Sprite s : sprites) {
+            if (!s.getImage().equals(sprite.getImage())) {
+              if (sprite.touching(s)) {
+                g.drawString("touching",
+                        (int) sprite.getLeft(),
+                        (int) sprite.getTop() + sprite.getWidth());
 
+                double push = .3;
+                while ((sprite.touching(s)))
+                {
+
+                  if(sprite.getLeft()>s.getLeft()) {
+                    sprite.setLeft(sprite.getLeft() + push);
+                    s.setLeft(s.getLeft() - push);
+                  }
+                  else {
+                    sprite.setLeft(sprite.getLeft() - push);
+                    s.setLeft(s.getLeft() + push);
+                  }
+                  if(sprite.getTop()>s.getTop()) {
+                    sprite.setTop(sprite.getTop() + push);
+                    s.setTop(s.getTop() - push);
+                  }
+                  else {
+                    sprite.setTop(sprite.getTop() - push);
+                    s.setTop(s.getTop() + push);
+                  }
+
+                }
+              }
+            }
+          }
+        }
+      System.out.println("test");
 
     }
   }

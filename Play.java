@@ -11,21 +11,13 @@ public class Play
 
     players.add(new SSTester());
     players.add(new SSTester());
-
+    players.add(new SSTester());
+    players.add(new SSTester());
+    players.add(new SSTester());
+    players.add(new SSTester());
 
     Display display = new Display(1300, 700, players);
     display.run();
-
-
-
-
-
-
-    //int winner = SpaceWar.play(players,1);
-
-
-
-    //shipsTester(10000000);
 
   }
 

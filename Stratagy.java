@@ -16,6 +16,4 @@ public interface Stratagy
   int getX();
 
   int getY();
-
-
 }

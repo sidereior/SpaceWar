@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Ship extends Sprite{
+public class Ship extends Sprite {
     final double speed = 2;
 
     private double vx;
@@ -44,29 +44,6 @@ public class Ship extends Sprite{
         }
 
 
-        for(Stratagy s: world.players) {
-//            if(touching(s.getX(),s.getY()))
-//                System.out.println("sprite at: (" + getLeft() + ", " + getTop() + ") is toucnhing sprite at: (" + s.getX() + ", " + s.getY() + ")");
-
-//            while(touchingAfterDisplacement(s.getX(),s.getY(),vx,0)) {//needs to be fixed to include all corners and not just
-//                System.out.println("oh oh");
-//                if(vx>0)
-//                    vx-=0.1;
-//                else
-//                    vx+=0.1;
-//                //System.out.println("right o left");
-//            }
-//            while(touchingAfterDisplacement(s.getX(),s.getY(),0,vy)) {
-//                if(vy>0)
-//                    vy-=0.1;
-//                else
-//                    vy+=0.1;
-//                //System.out.println("up o down");
-//            }
-        }
-
-
-
         if (getLeft()+getWidth()/2 < 0)
             vx = Math.abs(vx);
         if (getLeft() + getWidth()/2 > world.getWidth())
@@ -80,6 +57,15 @@ public class Ship extends Sprite{
         setLeft(getLeft()+vx);
         setTop(getTop()+vy);
     }
+
+    public double getVx(){return vx;}
+
+    public double getVy(){return vy;}
+
+    public void setVx(double vx){this.vx = vx;}
+
+    public void setVy(double vy){this.vy = vy;}
+
 
 
 }
