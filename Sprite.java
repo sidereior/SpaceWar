@@ -11,10 +11,11 @@ public class Sprite
   private int width;
   private int height;
   private String image;
+  private Color[] colors;
   private ArrayList<Location> playersSpots;
   private ArrayList<Location> treasureSpots;
 
-  public Sprite(double theLeft, double theTop, int theWidth, int theHeight, String theImage, ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots)
+  public Sprite(double theLeft, double theTop, int theWidth, int theHeight, String theImage, Color[] colors, ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots)
   {
     left = theLeft;
     top = theTop;
@@ -24,6 +25,7 @@ public class Sprite
     this.treasureSpots = treasureSpots;
 
     setImage(theImage);
+    setColors(colors);
   }
 
   public Sprite(double theLeft, double theTop, int theWidth, int theHeight, String theImage, ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots, Color color)
@@ -165,6 +167,10 @@ public class Sprite
     image = i;
   }
 
+  public Color[] getColors() { return colors; }
+
+  public void setColors(Color[] c) { colors = c; }
+
   public void getLocations(ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots)
   {this.playersSpots = playersSpots;
     this.treasureSpots = treasureSpots; }
@@ -172,9 +178,5 @@ public class Sprite
   public void step(World world)
   {
     //do NOT insert any code here
-  }
-
-  public Color[] getColors() {
-    return new Color[]{new Color(0xF00BF3)};
   }
 }

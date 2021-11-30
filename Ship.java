@@ -11,7 +11,7 @@ public class Ship extends Sprite {
     public Ship(double left, double top, int width, int height, String image, Stratagy s, ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots)
     {
         //super();
-        super(left, top, width, height, image, playersSpots,  treasureSpots);
+        super(left, top, width, height, image, null, playersSpots, treasureSpots);
         stratagy = s;
         vx = 0;
         vy = 0;
