@@ -61,7 +61,7 @@ public class Display extends JComponent implements KeyListener, MouseListener, M
     try
     {
       SwingUtilities.invokeAndWait(new Runnable() { public void run() {
-        world = new World(width, height, players); //TODO not good coding practice?
+        world = new World(width, height, players);
 //omoik
         frame = new JFrame();
         frame.setTitle("World");

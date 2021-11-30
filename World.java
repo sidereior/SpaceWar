@@ -4,7 +4,7 @@ import java.util.*;
 public class World
 {
   final String treasureImageName = "triangle.png";
-  final String[] shipImageNames = new String[]{"CyanCircle.png", "PinkCircle.png", "PurpleCircle.png", "RedCircle.png","circleBlue.png"};
+  final String[] shipImageNames = new String[]{"CyanCircle.png", "PinkCircle.png", "PurpleCircle.png", "RedCircle.png","circleBlue.png","circleBlue.png"};
 
   ArrayList<Stratagy> players;
 
@@ -45,8 +45,8 @@ public class World
   
   public void stepAll()
   {
-    //if(Math.random()<.003)
-    //  sprites.add(new SpaceTreasure(Math.random() * width, Math.random() * height, 50, 50, treasureImageName, null, null));
+    if(Math.random()<.03)
+      sprites.add(new SpaceTreasure(Math.random() * width, Math.random() * height, 50, 50, treasureImageName, null, null));
 
     //sprites.add(new SpaceTreasure((int)(Math.random()*getWidth()),(int)(Math.random()*getHeight()),50,50,treasureImageName, null));
 
@@ -81,6 +81,29 @@ public class World
       {
 
 
+      for (Sprite sprite: sprites)
+      {
+        if (!sprite.getImage().equals(treasureImageName)&& !s.getImage().equals(sprite.getImage())) {
+          double push = .3;
+          while ((sprite.touching(s))) {
+
+            if (sprite.getLeft() > s.getLeft()) {
+              sprite.setLeft(sprite.getLeft() + push);
+              s.setLeft(s.getLeft() - push);
+            } else {
+              sprite.setLeft(sprite.getLeft() - push);
+              s.setLeft(s.getLeft() + push);
+            }
+            if (sprite.getTop() > s.getTop()) {
+              sprite.setTop(sprite.getTop() + push);
+              s.setTop(s.getTop() - push);
+            } else {
+              sprite.setTop(sprite.getTop() - push);
+              s.setTop(s.getTop() + push);
+            }
+          }
+        }
+      }
 
 
 
@@ -162,34 +185,11 @@ public class World
                         (int) sprite.getLeft(),
                         (int) sprite.getTop() + sprite.getWidth());
 
-                double push = .3;
-                while ((sprite.touching(s)))
-                {
 
-                  if(sprite.getLeft()>s.getLeft()) {
-                    sprite.setLeft(sprite.getLeft() + push);
-                    s.setLeft(s.getLeft() - push);
-                  }
-                  else {
-                    sprite.setLeft(sprite.getLeft() - push);
-                    s.setLeft(s.getLeft() + push);
-                  }
-                  if(sprite.getTop()>s.getTop()) {
-                    sprite.setTop(sprite.getTop() + push);
-                    s.setTop(s.getTop() - push);
-                  }
-                  else {
-                    sprite.setTop(sprite.getTop() - push);
-                    s.setTop(s.getTop() + push);
-                  }
-
-                }
               }
             }
           }
         }
-      System.out.println("test");
-
     }
   }
 }
