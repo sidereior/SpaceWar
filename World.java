@@ -4,11 +4,15 @@ import java.util.*;
 public class World
 {
   final String treasureImageName = "triangle.png";
+  final String bulletImageName = "Bullet.png";
   final String[] shipImageNames = new String[]{"CyanCircle.png", "PinkCircle.png", "PurpleCircle.png", "RedCircle.png","circleBlue.png","circleBlue.png"};
 
   ArrayList<Stratagy> players;
 
   private ArrayList<Sprite> sprites;
+  private ArrayList<Location> shipLocs;//TODO change to array?
+  private ArrayList<Location> treasuresLocs;//TODO change to array?
+  private ArrayList<Location> bulletLocs;//TODO change to array?
   private final int width;
   private final int height;
   private final int playerSize = 25;
@@ -43,17 +47,35 @@ public class World
     count++;
     return s;
   }
-  
+
+  public ArrayList<Location> getShipLocs() {
+    return shipLocs;
+  }
+
+  public ArrayList<Location> getTreasuresLocs() {
+    return treasuresLocs;
+  }
+  public ArrayList<Location> getBulletLocs() {
+    return bulletLocs;
+  }
+
+  public void makeBullet(double x, double y, double a, double b, String playerImage)
+  {
+    sprites.add(new Bullet(x,y,5,5,"Bullet.png",playerImage,null,null,Math.atan2(b-y,a-x)));
+  }
+
+
   public void stepAll()
   {
-    if(Math.random()<.03)
+    if(Math.random()<.01)
       sprites.add(new SpaceTreasure(Math.random() * width, Math.random() * height, playerSize, playerSize, treasureImageName, null, null));
 
     //sprites.add(new SpaceTreasure((int)(Math.random()*getWidth()),(int)(Math.random()*getHeight()),playerSize,playerSize,treasureImageName, null));
 
 
-    ArrayList<Location> shipLocs = new ArrayList<>();
-    ArrayList<Location> treasuresLocs = new ArrayList<>();
+    shipLocs = new ArrayList<>();
+    treasuresLocs = new ArrayList<>();
+    bulletLocs = new ArrayList<>();
 
     ArrayList<Sprite> treasures = new ArrayList<>();
 
@@ -63,6 +85,10 @@ public class World
       if (sprite.getImage().equals(treasureImageName)) {
         treasuresLocs.add(new Location((int)sprite.getTop(), (int)sprite.getLeft()));
         treasures.add(sprite);
+      }
+      else if (sprite.getImage().equals(bulletImageName))
+      {
+        bulletLocs.add(new Location((int) sprite.getTop(), (int) sprite.getLeft()));
       }
       else {
         shipLocs.add(new Location((int) sprite.getTop(), (int) sprite.getLeft()));
@@ -74,7 +100,7 @@ public class World
     {
       Sprite s = sprites.get(i);
       s.step(this);
-      if(s.getImage().equals(treasureImageName)) {
+      if(s.getImage().equals(treasureImageName) || s.getImage().equals(bulletImageName)) {
         // do nothuing
       }
       else
@@ -83,7 +109,7 @@ public class World
 
       for (Sprite sprite: sprites)
       {
-        if (!sprite.getImage().equals(treasureImageName)&& !s.getImage().equals(sprite.getImage())) {
+        if (!(sprite.getImage().equals(treasureImageName)|| sprite.getImage().equals(bulletImageName))&& !s.getImage().equals(sprite.getImage())) {
           double push = .3;
           while ((sprite.touching(s))) {
 
@@ -174,7 +200,7 @@ public class World
 
       g.setColor(Color.WHITE);
 
-      if(sprite.getImage().equals(treasureImageName)) {//do nothing
+      if(sprite.getImage().equals(treasureImageName) || sprite.getImage().equals(bulletImageName)) {//do nothing
       }
         else
         {

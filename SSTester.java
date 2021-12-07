@@ -21,24 +21,14 @@ public class SSTester implements Stratagy
         this.worldY = worldY;
     }
 
+
     @Override
-    public void getLocations(ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots) {
-        //TODO just move arraylist
+    public Location move(ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots) {
         this.otherShipsSpots = playersSpots;
         this.treasureSpots = treasureSpots;
         x = otherShipsSpots.get(index).getCol();
         y = otherShipsSpots.get(index).getRow();
-    }
 
-    @Override
-    public Location move() {
-        //if(treasureSpots.size()>0)
-            //System.out.println(treasureSpots.get(0).toString());
-        //else
-            //System.out.println("bruh");
-        //return location of where you want to move to
-        //keep in mind that your ships spot is included in otherShipSpots
-        //write code here:
 
         double dist = 999999;
         int j = -1;
@@ -53,18 +43,16 @@ public class SSTester implements Stratagy
             }
 
         }
-
-
-
-
-
         if(j!=-1) {
-            //System.out.println("moving from (" + x + "," + y + ") to " + treasureSpots.get(j).toString());
-            //System.out.println(treasureSpots.get(j).toString());
             return treasureSpots.get(j);
         }
         else
             return new Location(y,x);
+    }
+
+    @Override
+    public Location shoot(Boolean canShoot) {
+        return new Location(worldY/2,worldX/2);
     }
 
     @Override

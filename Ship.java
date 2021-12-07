@@ -7,6 +7,8 @@ public class Ship extends Sprite {
     private double vx;
     private double vy;
     private Stratagy stratagy;
+    private long start = System.currentTimeMillis();
+    boolean canShoot = true;
 
     public Ship(double left, double top, int width, int height, String image, Stratagy s, ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots)
     {
@@ -18,19 +20,31 @@ public class Ship extends Sprite {
 
     }
 
-    public void getLocations(ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots)
-    {
-
-        //TODO only give objects within a certain radius!!!!
-        stratagy.getLocations(playersSpots, treasureSpots);
-    }
-
-
     public void step(World world)
     {
-            //TODO FIX WHEN TRESURE IS DIRECTLY ABOVE SHIP IT STOPS MOVING
 
-        Location moveTo = stratagy.move();
+        System.out.println(System.currentTimeMillis() - start);
+
+        if(5000<System.currentTimeMillis() - start) {
+            start = System.currentTimeMillis();
+            canShoot = true;
+        }
+        Location moveTo = stratagy.move(world.getShipLocs(), world.getTreasuresLocs());
+        Location ShootTo = stratagy.shoot(canShoot);
+
+        if(ShootTo!=null && canShoot)
+        {
+            canShoot = false;
+            world.makeBullet(getLeft(),getTop(),ShootTo.getCol(),ShootTo.getRow(),getImage());
+        }
+
+
+
+
+        //TODO only give objects within a certain radius!!!!
+
+
+
         if(Math.abs(moveTo.getCol()-getLeft()) >1.1 &&
                 Math.abs(moveTo.getRow()-getTop())>1.1) {
 
