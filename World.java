@@ -66,7 +66,6 @@ public class World
       else {
         shipLocs.add(new Location((int) sprite.getTop(), (int) sprite.getLeft()));
       }
-
     }
 
 
