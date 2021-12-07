@@ -20,6 +20,26 @@ public class Ship extends Sprite {
 
     }
 
+    //ArrayList<Location> play=new ArrayList<Location>();
+    //        for(int i=0; i<playersSpots.size(); i++){
+    //            double dist=Math.sqrt((Math.pow((playersSpots.get(i).getRow()-x),2)+Math.pow((playersSpots.get(i).getCol()-y),2)));
+    //            if(dist<=250)
+    //            {
+    //                play.add(playersSpots.get(i));
+    //            }
+    //        }
+    //
+    //        ArrayList<Location> treas=new ArrayList<Location>();
+    //        for(int i=0; i<treasureSpots.size(); i++){
+    //            double dist=Math.sqrt((Math.pow((treasureSpots.get(i).getRow()-x),2)+Math.pow((treasureSpots.get(i).getCol()-y),2)));
+    //            if(dist<=250)
+    //            {
+    //                treas.add(treasureSpots.get(i));
+    //            }
+    //        }
+
+
+
     public void step(World world)
     {
 
@@ -29,6 +49,10 @@ public class Ship extends Sprite {
             start = System.currentTimeMillis();
             canShoot = true;
         }
+
+
+
+
         Location moveTo = stratagy.move(world.getShipLocs(), world.getTreasuresLocs());
         Location ShootTo = stratagy.shoot(canShoot);
 
