@@ -43,6 +43,18 @@ public class Ship extends Sprite {
             vy = 0;
         }
 
+        if(vx+vy==0){
+            int r = (int)(Math.random()*4);
+            if(r==0)
+                vx=Math.random();
+            if(r==1)
+                vx=-Math.random();
+            if(r==2)
+                vy=Math.random();
+            if(r==3)
+                vy=-Math.random();
+        }
+
 
         if (getLeft()+getWidth()/2 < 0)
             vx = Math.abs(vx);

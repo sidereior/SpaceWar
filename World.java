@@ -11,6 +11,7 @@ public class World
   private ArrayList<Sprite> sprites;
   private final int width;
   private final int height;
+  private final int playerSize = 25;
   private int count;
 
 
@@ -30,7 +31,7 @@ public class World
       int y = (int)(Math.random()*height);
       s.newRound(players.size(),x,y,width,height);
       s.setIndex(i);
-      sprites.add(new Ship(Math.random()*width, Math.random()*height, 50, 50, getImage(),s, null,null));
+      sprites.add(new Ship(Math.random()*width, Math.random()*height, playerSize, playerSize, getImage(),s, null,null));
     }
     //sprites.add(new SpaceTreasure( 300,500,50,50,treasureImageName,null, null));
     //sprites.add(new SpaceTreasure( 150,150,50,50,treasureImageName,null));
@@ -46,9 +47,9 @@ public class World
   public void stepAll()
   {
     if(Math.random()<.03)
-      sprites.add(new SpaceTreasure(Math.random() * width, Math.random() * height, 50, 50, treasureImageName, null, null));
+      sprites.add(new SpaceTreasure(Math.random() * width, Math.random() * height, playerSize, playerSize, treasureImageName, null, null));
 
-    //sprites.add(new SpaceTreasure((int)(Math.random()*getWidth()),(int)(Math.random()*getHeight()),50,50,treasureImageName, null));
+    //sprites.add(new SpaceTreasure((int)(Math.random()*getWidth()),(int)(Math.random()*getHeight()),playerSize,playerSize,treasureImageName, null));
 
 
     ArrayList<Location> shipLocs = new ArrayList<>();
@@ -136,7 +137,7 @@ public class World
 
   public void mouseClicked(int x, int y)
   {
-    sprites.add(new SpaceTreasure( x,y,50,50,treasureImageName,null,null));
+    sprites.add(new SpaceTreasure( x,y,playerSize,playerSize,treasureImageName,null,null));
     System.out.println("mouseClicked:  " + x + ", " + y);
   }
   
@@ -177,17 +178,17 @@ public class World
       }
         else
         {
-          for (Sprite s : sprites) {
-            if (!s.getImage().equals(sprite.getImage())) {
-              if (sprite.touching(s)) {
-                g.drawString("touching",
-                        (int) sprite.getLeft(),
-                        (int) sprite.getTop() + sprite.getWidth());
-
-
-              }
-            }
-          }
+//          for (Sprite s : sprites) {
+//            if (!s.getImage().equals(sprite.getImage())) {
+//              if (sprite.touching(s)) {
+//                g.drawString("touching",
+//                        (int) sprite.getLeft(),
+//                        (int) sprite.getTop() + sprite.getWidth());
+//
+//
+//              }
+//            }
+//          }
         }
     }
   }
