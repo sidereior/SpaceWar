@@ -21,8 +21,26 @@ public class Ship extends Sprite {
     public void getLocations(ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots)
     {
 
-        //TODO only give objects within a certain radius!!!!
-        stratagy.getLocations(playersSpots, treasureSpots);
+          ArrayList<Location> play=new ArrayList<Location>();
+        for(int i=0; i<playersSpots.size(); i++){
+            double dist=Math.sqrt((Math.pow((playersSpots.get(i).getRow()-x),2)+Math.pow((playersSpots.get(i).getCol()-y),2)));
+            if(dist<=250)
+            {
+                play.add(playersSpots.get(i));
+            }
+        }   
+       
+        ArrayList<Location> treas=new ArrayList<Location>();
+        for(int i=0; i<treasureSpots.size(); i++){
+            double dist=Math.sqrt((Math.pow((treasureSpots.get(i).getRow()-x),2)+Math.pow((treasureSpots.get(i).getCol()-y),2)));
+            if(dist<=250)
+            {
+                treas.add(treasureSpots.get(i));
+            }
+        }    
+         
+        stratagy.getLocations(play, treas);
+        //changes here
     }
 
 
