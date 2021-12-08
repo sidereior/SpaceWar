@@ -23,11 +23,11 @@ public class SSTester implements Stratagy
 
 
     @Override
-    public Location move(ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots) {
+    public Location move(ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots, ArrayList<Location> bulletSpots) {
         this.otherShipsSpots = playersSpots;
         this.treasureSpots = treasureSpots;
-        x = otherShipsSpots.get(index).getCol();
-        y = otherShipsSpots.get(index).getRow();
+        x = otherShipsSpots.get(index).getCol();  ///[s1,s2,s3,s4]
+        y = otherShipsSpots.get(index).getRow(); //TODO
 
 
         double dist = 999999;

@@ -39,6 +39,21 @@ public class Ship extends Sprite {
     //        }
 
 
+    public ArrayList<Location> removeOutsideRadius(ArrayList<Location> locs)
+    {
+//        for(int i = 0; i < locs.size(); i++)
+//        {
+//            if(Math.sqrt(
+//                    Math.pow(locs.get(i).getCol()-getLeft(),2) +
+//                            Math.pow(locs.get(i).getRow()-getTop(),2))>500)
+//            {
+//                locs.remove(i);
+//                i--;
+//            }
+//        }
+        return locs;
+    }
+
 
     public void step(World world)
     {
@@ -52,8 +67,7 @@ public class Ship extends Sprite {
 
 
 
-
-        Location moveTo = stratagy.move(world.getShipLocs(), world.getTreasuresLocs());
+        Location moveTo = stratagy.move(removeOutsideRadius(world.getShipLocs()),removeOutsideRadius( world.getTreasuresLocs()), removeOutsideRadius(world.getBulletLocs()));
         Location ShootTo = stratagy.shoot(canShoot);
 
         if(ShootTo!=null && canShoot)
