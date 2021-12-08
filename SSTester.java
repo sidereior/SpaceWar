@@ -52,13 +52,13 @@ public class SSTester implements Stratagy
 
     @Override
     public Location shoot(Boolean canShoot) {
-        return null;
-        //return new Location(worldY/2,worldX/2);
+        //return null;
+        return new Location(worldY/2,worldX/2);
     }
 
     @Override
     public void roundEnded(boolean outcome, int[] opScores, int winner) {
-        //You may edit here but it is not require
+        //You may edit here but it is not required
     }
 
     @Override
