@@ -10,10 +10,6 @@ public class Play
 
     players.add(new SSTester());
     players.add(new SSTester());
-    players.add(new SSTester());
-    players.add(new SSTester());
-    players.add(new SSTester());
-    players.add(new SSTester());
 
     Display display = new Display(1300, 700, players);
     display.run();

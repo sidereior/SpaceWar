@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class Ship extends Sprite {
     final double speed = 2;
+    final int radius = 150;
 
     private double vx;
     private double vy;
@@ -41,24 +42,39 @@ public class Ship extends Sprite {
 
     public ArrayList<Location> removeOutsideRadius(ArrayList<Location> locs)
     {
-//        for(int i = 0; i < locs.size(); i++)
-//        {
-//            if(Math.sqrt(
-//                    Math.pow(locs.get(i).getCol()-getLeft(),2) +
-//                            Math.pow(locs.get(i).getRow()-getTop(),2))>500)
-//            {
-//                locs.remove(i);
-//                i--;
-//            }
-//        }
-        return locs;
+
+        ArrayList<Location> radLocs = new ArrayList<>(locs);
+
+        System.out.println(radLocs.size());
+
+        for(int i = 0; i < radLocs.size(); i++)
+        {
+            if(Math.sqrt(
+                    Math.pow(radLocs.get(i).getCol()-getLeft(),2) +
+                            Math.pow(radLocs.get(i).getRow()-getTop(),2))>radius)
+            {
+                radLocs.remove(i);
+                i--;
+            }
+
+            if(i!=-1 && (Math.abs(radLocs.get(i).getCol()-getLeft())< 2 && Math.abs(radLocs.get(i).getRow()-getTop())< 2))
+            {
+                radLocs.remove(i);
+                i--;
+            }
+        }
+        if(radLocs.size()!=0)
+            System.out.println("sprite at (" + (int)getLeft() + ", " + (int)getTop() + ") sees: ");
+        for (Location l: radLocs)
+            System.out.print(l.toString() + " ");
+        return radLocs;
     }
 
 
     public void step(World world)
     {
 
-        System.out.println(System.currentTimeMillis() - start);
+        //.out.println(System.currentTimeMillis() - start);
 
         if(5000<System.currentTimeMillis() - start) {
             start = System.currentTimeMillis();
@@ -67,7 +83,7 @@ public class Ship extends Sprite {
 
 
 
-        Location moveTo = stratagy.move(removeOutsideRadius(world.getShipLocs()),removeOutsideRadius( world.getTreasuresLocs()), removeOutsideRadius(world.getBulletLocs()));
+        Location moveTo = stratagy.move(removeOutsideRadius(world.getShipLocs()),removeOutsideRadius( world.getTreasuresLocs()), removeOutsideRadius(world.getBulletLocs()), new Location((int)getTop(),(int)getLeft()));
         Location ShootTo = stratagy.shoot(canShoot);
 
         if(ShootTo!=null && canShoot)

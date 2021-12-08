@@ -67,8 +67,8 @@ public class World
 
   public void stepAll()
   {
-    if(Math.random()<.01)
-      sprites.add(new SpaceTreasure(Math.random() * width, Math.random() * height, playerSize, playerSize, treasureImageName, null, null));
+//    if(Math.random()<.01)
+//      sprites.add(new SpaceTreasure(Math.random() * width, Math.random() * height, playerSize, playerSize, treasureImageName, null, null));
 
     //sprites.add(new SpaceTreasure((int)(Math.random()*getWidth()),(int)(Math.random()*getHeight()),playerSize,playerSize,treasureImageName, null));
 
@@ -204,6 +204,7 @@ public class World
       }
         else
         {
+          g.drawOval((int)(sprite.getLeft()+sprite.getWidth()/2-150),(int)(sprite.getTop()+sprite.getHeight()/2-150),150*2,150*2);
 //          for (Sprite s : sprites) {
 //            if (!s.getImage().equals(sprite.getImage())) {
 //              if (sprite.touching(s)) {
