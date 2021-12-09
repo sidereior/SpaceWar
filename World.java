@@ -6,9 +6,13 @@ import java.awt.geom.AffineTransform;
 
 public class World
 {
-  final String treasureImageName = "triangle.png";
-  final String bulletImageName = "Bullet.png";
-  final String[] shipImageNames = new String[]{"CyanCircle.png", "PinkCircle.png", "PurpleCircle.png", "RedCircle.png","circleBlue.png","circleBlue.png"};
+  final String treasureImageName = "treasure.png";
+  final String bulletImageName = "dynamite.png";
+  final String[] shipImageNames = new String[]{"spaceship-blue.png","spaceship-salmon.png","spaceship-yellow.png",
+           "spaceship-pink.png","spaceship-red.png","spaceship-babyblue.png","spaceship-green.png",};
+  private final int width;
+  private final int height;
+  private final int playerSize = 25;
 
   ArrayList<Stratagy> players;
 
@@ -16,9 +20,8 @@ public class World
   private ArrayList<Location> shipLocs;//TODO change to array?
   private ArrayList<Location> treasuresLocs;//TODO change to array?
   private ArrayList<Location> bulletLocs;//TODO change to array?
-  private final int width;
-  private final int height;
-  private final int playerSize = 25;
+
+  private double bulletRad = 0;
   private int count;
   private  Map<String, Integer> scores = new HashMap<String, Integer>();
 
@@ -40,8 +43,7 @@ public class World
       s.setIndex(i);
       sprites.add(new Ship(Math.random()*width, Math.random()*height, playerSize, playerSize, getImage(),s, null,null));
     }
-    //sprites.add(new SpaceTreasure( 300,500,50,50,treasureImageName,null, null));
-    //sprites.add(new SpaceTreasure( 150,150,50,50,treasureImageName,null));
+
   }
 
   public String getImage()
@@ -64,12 +66,14 @@ public class World
 
   public void makeBullet(double x, double y, double a, double b, String playerImage)
   {
-    sprites.add(new Bullet(x,y,5,5,"Bullet.png",playerImage,null,null,Math.atan2(b-y,a-x)));
+    sprites.add(new Bullet(x,y,10,10,bulletImageName,playerImage,null,null,Math.atan2(b-y,a-x)));
   }
 
 
   public void stepAll()
   {
+    if(bulletRad==Math.PI*2)
+      bulletRad = -Math.PI*2;
 //    if(Math.random()<.01)
 //      sprites.add(new SpaceTreasure(Math.random() * width, Math.random() * height, playerSize, playerSize, treasureImageName, null, null));
 
@@ -118,6 +122,7 @@ public class World
       }
       else
       {
+
 
 
       for (Sprite sprite: sprites)
@@ -211,41 +216,65 @@ public class World
   public void paintComponent(Graphics g)
   {
 
+
     g.setColor(Color.BLACK);
     g.fillRect(0, 0, width, height-30);
     g.setColor(new Color(105,105,105));
-        g.fillRect(0,670,width, 30);
+    g.fillRect(0,670,width, 30);
 
     for (int i = 0; i < sprites.size(); i++)
     {
       Sprite sprite = sprites.get(i);
-//      g.drawImage(Display.getImage(sprite.getImage(), sprite.getColors()),
-//                  (int)sprite.getLeft(), (int)sprite.getTop(),
-//                  sprite.getWidth(), sprite.getHeight(), null);
-      g.drawImage(Display.getImage(sprite.getImage(), sprite.getColors()),
-              (int)sprite.getLeft(),
-              (int)sprite.getTop()-30,
-              sprite.getWidth(), sprite.getHeight(), null);
+
 
       g.setColor(Color.WHITE);
 
-      if(sprite.getImage().equals(treasureImageName) || sprite.getImage().equals(bulletImageName)) {//do nothing
+      if(sprite.getImage().equals(treasureImageName)) {
+        g.drawImage(Display.getImage(sprite.getImage(), sprite.getColors()),
+                (int)sprite.getLeft(),
+                (int)sprite.getTop(),
+                sprite.getWidth(), sprite.getHeight(), null);
       }
-        else
-        {
-          g.drawOval((int)(sprite.getLeft()+sprite.getWidth()/2-150),(int)(sprite.getTop()-30+sprite.getHeight()/2-150),150*2,150*2);
-//          for (Sprite s : sprites) {
-//            if (!s.getImage().equals(sprite.getImage())) {
-//              if (sprite.touching(s)) {
-//                g.drawString("touching",
-//                        (int) sprite.getLeft(),
-//                        (int) sprite.getTop() + sprite.getWidth());
-//
-//
-//              }
-//            }
-//          }
-        }
+      else if(sprite.getImage().equals(bulletImageName))
+      {
+        Graphics2D g2 = (Graphics2D)(g);
+
+        AffineTransform old = g2.getTransform();
+
+        g2.rotate(bulletRad+=.01, sprite.getLeft()+sprite.getWidth()/2,sprite.getTop()+sprite.getHeight()/2);
+
+        Image image = Display.getImage(sprite.getImage(),null);
+
+
+        g2.drawImage(image,
+                (int)sprite.getLeft(),
+                (int)sprite.getTop(),
+                sprite.getWidth(), sprite.getHeight(), null);
+
+        g2.setColor(new Color(255, 255, 255));
+
+        g2.setTransform(old);
+
+      }
+      else
+      {
+        Graphics2D g2 = (Graphics2D)(g);
+
+        AffineTransform old = g2.getTransform();
+
+        g2.rotate(((Ship)sprite).getAngle(), sprite.getLeft()+sprite.getWidth()/2,sprite.getTop()+sprite.getHeight()/2);
+
+        Image image = Display.getImage(sprite.getImage(),null);
+
+        g2.drawImage(image,
+                (int)sprite.getLeft(),
+                (int)sprite.getTop(),
+                sprite.getWidth(), sprite.getHeight(), null);
+
+        g2.setColor(new Color(255, 255, 255));
+
+        g2.setTransform(old);
+      }
        //text right here 
        //HOW TO MAKE IT NOT GO THRU IT, IT IS REALLY ANNOYING BUT NOT REALLY A PROBLEM
        String scoreTotal="";

@@ -5,6 +5,9 @@ public class Ship extends Sprite {
     final double speed = 2;
     final int radius = 150;
 
+    private boolean jiggly = false;
+    private int jiggs = 1;
+    private double theta = 0;
     private double vx;
     private double vy;
     private Stratagy stratagy;
@@ -89,8 +92,10 @@ public class Ship extends Sprite {
         if(ShootTo!=null && canShoot)
         {
             canShoot = false;
-            world.makeBullet(getLeft(),getTop(),ShootTo.getCol(),ShootTo.getRow(),getImage());
+            world.makeBullet(getLeft()+getWidth()/2,getTop()-25,ShootTo.getCol(),ShootTo.getRow(),getImage());
         }
+
+
 
 
 
@@ -112,6 +117,7 @@ public class Ship extends Sprite {
         }
 
         if(vx+vy==0){
+            jiggly = true;
             int r = (int)(Math.random()*4);
             if(r==0)
                 vx=Math.random();
@@ -122,6 +128,8 @@ public class Ship extends Sprite {
             if(r==3)
                 vy=-Math.random();
         }
+        else
+            jiggly = false;
 
 
         if (getLeft()+getWidth()/2 < 0)
@@ -136,6 +144,18 @@ public class Ship extends Sprite {
 
         setLeft(getLeft()+vx);
         setTop(getTop()+vy);
+    }
+
+    public double getAngle()
+    {
+        if(!jiggly)
+        {
+            System.out.println("changed?");
+            theta = Math.PI/2+Math.atan2(vy,vx);
+        }
+        if(Math.random()<0.001)
+            jiggs*=-1;
+        return theta+=(Math.random()/100)*jiggs;
     }
 
     public double getVx(){return vx;}
