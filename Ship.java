@@ -45,7 +45,7 @@ public class Ship extends Sprite {
 
         ArrayList<Location> radLocs = new ArrayList<>(locs);
 
-        System.out.println(radLocs.size());
+        //System.out.println(radLocs.size());
 
         for(int i = 0; i < radLocs.size(); i++)
         {
@@ -63,10 +63,10 @@ public class Ship extends Sprite {
                 i--;
             }
         }
-        if(radLocs.size()!=0)
-            System.out.println("sprite at (" + (int)getLeft() + ", " + (int)getTop() + ") sees: ");
-        for (Location l: radLocs)
-            System.out.print(l.toString() + " ");
+        //if(radLocs.size()!=0)
+           // System.out.println("sprite at (" + (int)getLeft() + ", " + (int)getTop() + ") sees: ");
+        //for (Location l: radLocs)
+            //System.out.print(l.toString() + " ");
         return radLocs;
     }
 

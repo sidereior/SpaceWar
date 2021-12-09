@@ -16,6 +16,10 @@ public class Bullet extends Sprite{
         this.playerImage = playerImage;
     }
 
+    public String getPlayerImage(){
+        return playerImage;
+    }
+
     @Override
     public void step(World world) {
         setLeft(getLeft()+speed*Math.cos(theta));
