@@ -1,4 +1,6 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.net.URL;
 import java.security.KeyStore.Entry;
 import java.util.*;
 import java.awt.font.FontRenderContext;
@@ -6,8 +8,8 @@ import java.awt.geom.AffineTransform;
 
 public class World
 {
-  final String treasureImageName = "treasure.png";
-  final String bulletImageName = "dynamite.png";
+  final String treasureImageName = "gem.png";
+  final String bulletImageName = "bullet.png";
   final String[] shipImageNames = new String[]{"spaceship-blue.png","spaceship-salmon.png","spaceship-yellow.png",
            "spaceship-pink.png","spaceship-red.png","spaceship-babyblue.png","spaceship-green.png",};
   private final int width;
@@ -20,6 +22,7 @@ public class World
   private ArrayList<Location> shipLocs;//TODO change to array?
   private ArrayList<Location> treasuresLocs;//TODO change to array?
   private ArrayList<Location> bulletLocs;//TODO change to array?
+  private Triplet<Integer,Integer,Integer>[] stars;
 
   private double bulletRad = 0;
   private int count;
@@ -35,6 +38,8 @@ public class World
     
     sprites = new ArrayList<>();
 
+    stars = generateStars();
+
     for(int i = 0; i<players.size(); i++) {
       Stratagy s = players.get(i);
       int x = (int)(Math.random()*width);
@@ -44,6 +49,16 @@ public class World
       sprites.add(new Ship(Math.random()*width, Math.random()*height, playerSize, playerSize, getImage(),s, null,null));
     }
 
+  }
+
+  Triplet<Integer,Integer,Integer>[] generateStars()
+  {
+    Triplet[] locs = new Triplet[128];
+    for(int i = 0; i< locs.length; i++)
+    {
+      locs[i] = new Triplet((int)(Math.random()*this.getWidth()),(int)(Math.random()*this.getHeight()),(int)(Math.random()*7));
+    }
+    return locs;
   }
 
   public String getImage()
@@ -74,8 +89,8 @@ public class World
   {
     if(bulletRad==Math.PI*2)
       bulletRad = -Math.PI*2;
-//    if(Math.random()<.01)
-//      sprites.add(new SpaceTreasure(Math.random() * width, Math.random() * height, playerSize, playerSize, treasureImageName, null, null));
+    if(Math.random()<.01)
+      sprites.add(new SpaceTreasure(Math.random() * width, Math.random() * height, playerSize, playerSize, treasureImageName, null, null));
 
     //sprites.add(new SpaceTreasure((int)(Math.random()*getWidth()),(int)(Math.random()*getHeight()),playerSize,playerSize,treasureImageName, null));
 
@@ -222,6 +237,12 @@ public class World
     g.setColor(new Color(105,105,105));
     g.fillRect(0,670,width, 30);
 
+    for (Triplet<Integer,Integer,Integer> star: stars)
+    {
+      g.drawImage(Display.getImage("star.png", null),
+              star.getFirst(),star.getSecond(),star.getThird(),star.getThird(), null);
+    }
+
     for (int i = 0; i < sprites.size(); i++)
     {
       Sprite sprite = sprites.get(i);
@@ -241,7 +262,7 @@ public class World
 
         AffineTransform old = g2.getTransform();
 
-        g2.rotate(bulletRad+=.01, sprite.getLeft()+sprite.getWidth()/2,sprite.getTop()+sprite.getHeight()/2);
+        //g2.rotate(bulletRad+=.01, sprite.getLeft()+sprite.getWidth()/2,sprite.getTop()+sprite.getHeight()/2);
 
         Image image = Display.getImage(sprite.getImage(),null);
 

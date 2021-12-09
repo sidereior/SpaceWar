@@ -149,10 +149,7 @@ public class Ship extends Sprite {
     public double getAngle()
     {
         if(!jiggly)
-        {
-            System.out.println("changed?");
             theta = Math.PI/2+Math.atan2(vy,vx);
-        }
         if(Math.random()<0.001)
             jiggs*=-1;
         return theta+=(Math.random()/100)*jiggs;
