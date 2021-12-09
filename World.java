@@ -1,7 +1,4 @@
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.net.URL;
-import java.security.KeyStore.Entry;
 import java.util.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
@@ -14,11 +11,12 @@ public class World
            "spaceship-pink.png","spaceship-red.png","spaceship-babyblue.png","spaceship-green.png",};
   private final int width;
   private final int height;
-  private final int playerSize = 25;
+  private final int playerSize = 50;
 
   ArrayList<Stratagy> players;
 
   private ArrayList<Sprite> sprites;
+  private ArrayList<Sprite> asteticSprites;
   private ArrayList<Location> shipLocs;//TODO change to array?
   private ArrayList<Location> treasuresLocs;//TODO change to array?
   private ArrayList<Location> bulletLocs;//TODO change to array?
@@ -26,6 +24,8 @@ public class World
 
   private double bulletRad = 0;
   private int count;
+  private int mouseX;
+  private int mouseY;
   private  Map<String, Integer> scores = new HashMap<String, Integer>();
 
 
@@ -37,6 +37,7 @@ public class World
     count = 0;
     
     sprites = new ArrayList<>();
+    asteticSprites = new ArrayList<>();
 
     stars = generateStars();
 
@@ -81,7 +82,7 @@ public class World
 
   public void makeBullet(double x, double y, double a, double b, String playerImage)
   {
-    sprites.add(new Bullet(x,y,10,10,bulletImageName,playerImage,null,null,Math.atan2(b-y,a-x)));
+    sprites.add(new Bullet(x,y,15,15,bulletImageName,playerImage,null,null,Math.atan2(b-y,a-x)));
   }
 
 
@@ -180,6 +181,7 @@ public class World
           if(s.touching(u)&&(!s.getImage().equals(((Bullet)u).getPlayerImage())))//!make sure its not the same guy who just shot, how do you know who shot it
           {
             scores.put(s.getImage(),(scores.get(s.getImage())-25));//change this than to let than what you get, 20 pts?
+            asteticSprites.add(new Eexplosion((int)u.getLeft(),(int)u.getTop(),20,20));
             sprites.remove(u);//need to remove it
           }
         }
@@ -212,6 +214,13 @@ public class World
     sprites.add(new SpaceTreasure( x,y,playerSize,playerSize,treasureImageName,null,null));
     //System.out.println("mouseClicked:  " + x + ", " + y);
   }
+
+  public void mouseMoved(int x, int y)
+  {
+    //System.out.println("called and mouse x is " + x);
+    mouseX =x;
+    mouseY=y;
+  }
   
   public void keyPressed(int key)
   {
@@ -241,6 +250,18 @@ public class World
     {
       g.drawImage(Display.getImage("star.png", null),
               star.getFirst(),star.getSecond(),star.getThird(),star.getThird(), null);
+    }
+
+    for(int i = 0; i< asteticSprites.size(); i++)
+    {
+      Sprite sprite = asteticSprites.get(i);
+      if(sprite.getImage().equals("square.png"))
+        asteticSprites.remove(i);
+      else
+        g.drawImage(Display.getImage(sprite.getImage(), sprite.getColors()),
+                (int)sprite.getLeft(),
+                (int)sprite.getTop(),
+                sprite.getWidth(), sprite.getHeight(), null);
     }
 
     for (int i = 0; i < sprites.size(); i++)
@@ -283,18 +304,30 @@ public class World
 
         AffineTransform old = g2.getTransform();
 
-        g2.rotate(((Ship)sprite).getAngle(), sprite.getLeft()+sprite.getWidth()/2,sprite.getTop()+sprite.getHeight()/2);
+        int centerX = (int)sprite.getLeft()+sprite.getWidth()/2;
+        int centerY = (int)sprite.getTop()+sprite.getHeight()/2;
+
+        g2.rotate(((Ship)sprite).getAngle(), centerX,centerY);
 
         Image image = Display.getImage(sprite.getImage(),null);
 
         g2.drawImage(image,
-                (int)sprite.getLeft(),
-                (int)sprite.getTop(),
-                sprite.getWidth(), sprite.getHeight(), null);
+                (int)(sprite.getLeft()-.4*sprite.getWidth()),
+                (int)(sprite.getTop()- .4*sprite.getHeight()),
+                (int)(sprite.getWidth()*1.8), (int)(sprite.getHeight()*1.8), null);
 
         g2.setColor(new Color(255, 255, 255));
 
+        g2.drawOval(centerX,centerY,2,2);
+
         g2.setTransform(old);
+
+        int radius = 300;
+        if(sprite.touching(mouseX,mouseY)) {
+          g2.drawOval((int) sprite.getLeft() + (int) sprite.getWidth() / 2 - radius / 2, (int) sprite.getTop() + (int) sprite.getHeight() / 2 - radius / 2, radius, radius);
+          g2.setColor(Color.MAGENTA);
+          g2.drawRect((int)sprite.getLeft(),(int)sprite.getTop(),sprite.getWidth(),sprite.getHeight());
+        }
       }
        //text right here 
        //HOW TO MAKE IT NOT GO THRU IT, IT IS REALLY ANNOYING BUT NOT REALLY A PROBLEM

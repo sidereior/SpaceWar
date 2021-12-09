@@ -98,6 +98,8 @@ public class Display extends JComponent implements KeyListener, MouseListener, M
     }
   }
 
+
+
   public void run()
   {
     while (true)
@@ -180,6 +182,7 @@ public class Display extends JComponent implements KeyListener, MouseListener, M
   public void mouseMoved(MouseEvent e) {
     mouseMoveX = e.getX();
     mouseMoveY = e.getY();
+    world.mouseMoved(mouseMoveX,mouseMoveY);
     //System.out.println("mouse move in display: " + mouseMoveX);
 
 
