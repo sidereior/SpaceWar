@@ -157,7 +157,7 @@ public class World
         }
         for(Sprite u: bullets)
         {
-          if(s.touching(u)&&(!s.getImage().equals(u.getImage())))//!make sure its not the same guy who just shot, how do you know who shot it
+          if(s.touching(u)&&(!s.getImage().equals(((Bullet)u).getPlayerImage())))//!make sure its not the same guy who just shot, how do you know who shot it
           {
             scores.put(s.getImage(),(scores.get(s.getImage())-25));//change this than to let than what you get, 20 pts?
             sprites.remove(u);//need to remove it
