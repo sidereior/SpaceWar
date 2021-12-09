@@ -137,6 +137,7 @@ public class World
         for(Sprite t: treasures)
           if(s.touching(t))
             sprites.remove(t);
+
       }
     }
   }
