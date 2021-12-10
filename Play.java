@@ -8,11 +8,14 @@ public class Play
   //Might not work with lots of bots
     ArrayList<Stratagy> players = new ArrayList<>();
 
-    players.add(new SSTester());
-    players.add(new SSTester());
-    players.add(new SSTester());
-    players.add(new SSTester());
-    players.add(new SSTester());
+    players.add(new SSGotoNearest());
+    players.add(new SSGotoNearest());
+    players.add(new SSGotoNearest());
+    players.add(new SSGotoNearest());
+    players.add(new SSGotoNearest());
+    players.add(new menace());
+    players.add(new menace());
+
 
     Display display = new Display(1300, 600, players);
     display.run();

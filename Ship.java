@@ -12,7 +12,7 @@ public class Ship extends Sprite {
     private double vy;
     private Stratagy stratagy;
     private long start = System.currentTimeMillis();
-    boolean canShoot = true;
+    boolean canShoot = false;
 
     public Ship(double left, double top, int width, int height, String image, Stratagy s, ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots)
     {
@@ -136,7 +136,7 @@ public class Ship extends Sprite {
             vx = Math.abs(vx);
         if (getLeft() + getWidth()/2 > world.getWidth())
             vx = -Math.abs(vx);
-        if (getTop() + getHeight()/2 > world.getHeight())
+        if (getTop() + getHeight() > world.getHeight()-30)
             vy = -Math.abs(vy);
         if(getTop() + getHeight()/2<0 )
             vy = Math.abs(vy);

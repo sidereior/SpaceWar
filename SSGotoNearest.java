@@ -1,15 +1,11 @@
 import java.util.ArrayList;
 
-public class SSTester implements Stratagy
+public class SSGotoNearest implements Stratagy
 {
-    private int index;
-
     private ArrayList<Location> otherShipsSpots;
     private ArrayList<Location> treasureSpots;
     private int x;
     private int y;
-    private int worldX;
-    private int worldY;
 
     @Override
     public void newRound(int numberofOpponents, int x, int y, int worldX, int worldY) {
@@ -17,20 +13,17 @@ public class SSTester implements Stratagy
         treasureSpots = new ArrayList<>();
         this.x = x;
         this.y = y;
-        this.worldX = worldX;
-        this.worldY = worldY;
     }
 
 
     @Override
     public Location move(ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots, ArrayList<Location> bulletSpots, Location curSpot) {
-        this.otherShipsSpots = playersSpots;
         this.treasureSpots = treasureSpots;
-        x = curSpot.getCol();  ///[s1,s2,s3,s4]
-        y = curSpot.getRow(); //TODO
+        x = curSpot.getCol();
+        y = curSpot.getRow();
 
 
-        double dist = 999999;
+        double dist = Integer.MAX_VALUE;
         int j = -1;
         for(int i = 0; i<treasureSpots.size(); i++)
         {
@@ -52,28 +45,11 @@ public class SSTester implements Stratagy
 
     @Override
     public Location shoot(Boolean canShoot) {
-        //return null;
-        return new Location(worldY/2,worldX/2);
+        return null;
+        //return new Location(worldY/2,worldX/2);
     }
 
-    @Override
-    public void roundEnded(boolean outcome, int[] opScores, int winner) {
-        //You may edit here but it is not required
-    }
 
-    @Override
-    public void setIndex(int index)
-    {
-        this.index = index;
-    }
 
-    @Override
-    public int getX() {
-        return x;
-    }
 
-    @Override
-    public int getY() {
-        return y;
-    }
 }

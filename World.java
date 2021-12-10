@@ -8,10 +8,10 @@ public class World
   final String treasureImageName = "gem.png";
   final String bulletImageName = "bullet.png";
   final String[] shipImageNames = new String[]{"spaceship-blue.png","spaceship-salmon.png","spaceship-yellow.png",
-           "spaceship-pink.png","spaceship-red.png","spaceship-babyblue.png","spaceship-green.png",};
+           "spaceship-pink.png","spaceship-red.png","spaceship-babyblue.png","spaceship-green.png","EmbeddedImage.png"};
   private final int width;
   private final int height;
-  private final int playerSize = 50;
+  private final int playerSize = 30;
 
   ArrayList<Stratagy> players;
 
@@ -46,8 +46,8 @@ public class World
       int x = (int)(Math.random()*width);
       int y = (int)(Math.random()*height);
       s.newRound(players.size(),x,y,width,height);
-      s.setIndex(i);
-      sprites.add(new Ship(Math.random()*width, Math.random()*height, playerSize, playerSize, getImage(),s, null,null));
+
+      sprites.add(new Ship(Math.random()*width, Math.random()*(height-30-playerSize), playerSize, playerSize, getImage(),s, null,null));
     }
 
   }
@@ -91,7 +91,7 @@ public class World
     if(bulletRad==Math.PI*2)
       bulletRad = -Math.PI*2;
     if(Math.random()<.01)
-      sprites.add(new SpaceTreasure(Math.random() * width, Math.random() * height, playerSize, playerSize, treasureImageName, null, null));
+      sprites.add(new SpaceTreasure(Math.random() * width, Math.random() * (height-30-playerSize), playerSize, playerSize, treasureImageName, null, null));
 
     //sprites.add(new SpaceTreasure((int)(Math.random()*getWidth()),(int)(Math.random()*getHeight()),playerSize,playerSize,treasureImageName, null));
 
