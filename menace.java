@@ -37,7 +37,9 @@ public class menace implements Stratagy{
                     j = i;
                 }
             }
-            return playersSpots.get(j);
+            if(Math.abs(playersSpots.get(j).getCol()-x)>50 && Math.abs(playersSpots.get(j).getRow()-y)>50 )
+                return playersSpots.get(j);
+            return new Location(x,y);
         }
         if(currentLocation.getCol()==gotoX && currentLocation.getRow()==gotoY)
         {

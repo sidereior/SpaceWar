@@ -8,6 +8,8 @@ public class World
   final String treasureImageName = "otherSprites/gem.png";
   final String bulletImageName = "otherSprites/bullet.png";
   final String[] shipImageNames = new String[]{"otherSprites/spaceship-blue.png", "otherSprites/spaceship-salmon.png", "otherSprites/spaceship-yellow.png",
+          "otherSprites/spaceship-pink.png", "otherSprites/spaceship-red.png", "otherSprites/spaceship-babyblue.png", "otherSprites/spaceship-green.png","otherSprites/spaceship-blue.png", "otherSprites/spaceship-salmon.png", "otherSprites/spaceship-yellow.png",
+          "otherSprites/spaceship-pink.png", "otherSprites/spaceship-red.png", "otherSprites/spaceship-babyblue.png", "otherSprites/spaceship-green.png","otherSprites/spaceship-blue.png", "otherSprites/spaceship-salmon.png", "otherSprites/spaceship-yellow.png",
           "otherSprites/spaceship-pink.png", "otherSprites/spaceship-red.png", "otherSprites/spaceship-babyblue.png", "otherSprites/spaceship-green.png", "otherSprites/EmbeddedImage.png"};
   private final int width;
   private final int height;
@@ -17,9 +19,10 @@ public class World
 
   private ArrayList<Sprite> sprites;
   private ArrayList<Sprite> asteticSprites;
-  private ArrayList<Location> shipLocs;//TODO change to array?
-  private ArrayList<Location> treasuresLocs;//TODO change to array?
-  private ArrayList<Location> bulletLocs;//TODO change to array?
+  private ArrayList<Location> shipLocs;
+  private ArrayList<Location> treasuresLocs;
+  private ArrayList<Location> bulletLocs;
+  private String[] botNames;
   private Triplet<Integer,Integer,Integer>[] stars;
 
   private double bulletRad = 0;
@@ -38,6 +41,7 @@ public class World
     
     sprites = new ArrayList<>();
     asteticSprites = new ArrayList<>();
+    botNames = new String[players.size()];
 
     stars = generateStars();
 
@@ -45,9 +49,10 @@ public class World
       Stratagy s = players.get(i);
       int x = (int)(Math.random()*width);
       int y = (int)(Math.random()*height);
-      s.newRound(players.size(),x,y,width,height);
+      s.newRound(players.size(),x,y,width,height-30);
 
       sprites.add(new Ship(Math.random()*width, Math.random()*(height-30-playerSize), playerSize, playerSize, getImage(),s, null,null));
+      botNames[i] =  s.getClass().getSimpleName();
     }
 
   }
@@ -93,7 +98,6 @@ public class World
     if(Math.random()<.01)
       sprites.add(new SpaceTreasure(Math.random() * width, Math.random() * (height-30-playerSize), playerSize, playerSize, treasureImageName, null, null));
 
-    //sprites.add(new SpaceTreasure((int)(Math.random()*getWidth()),(int)(Math.random()*getHeight()),playerSize,playerSize,treasureImageName, null));
 
 
     shipLocs = new ArrayList<>();
@@ -252,18 +256,8 @@ public class World
               star.getFirst(),star.getSecond(),star.getThird(),star.getThird(), null);
     }
 
-    for(int i = 0; i< asteticSprites.size(); i++)
-    {
-      Sprite sprite = asteticSprites.get(i);
-      if(sprite.getImage().equals("otherSprites/square.png"))
-        asteticSprites.remove(i);
-      else
-        g.drawImage(Display.getImage(sprite.getImage(), sprite.getColors()),
-                (int)sprite.getLeft(),
-                (int)sprite.getTop(),
-                sprite.getWidth(), sprite.getHeight(), null);
-    }
 
+    int c = 0;
     for (int i = 0; i < sprites.size(); i++)
     {
       Sprite sprite = sprites.get(i);
@@ -325,8 +319,16 @@ public class World
         int radius = 300;
         if(sprite.touching(mouseX,mouseY)) {
           g2.drawOval((int) sprite.getLeft() + (int) sprite.getWidth() / 2 - radius / 2, (int) sprite.getTop() + (int) sprite.getHeight() / 2 - radius / 2, radius, radius);
+          String name = botNames[i] + " " + i;
+          int pixel=10;
+          Font font = new Font("Arial", Font.PLAIN, pixel);
+          g2.setFont(font);
+          FontRenderContext frc = new FontRenderContext(new AffineTransform(), true, true);
+          int textwidth = (int)(font.getStringBounds(name, frc).getWidth());
+          g2.drawString(name, (int)sprite.getLeft()+sprite.getWidth()/2-textwidth/2,(int)sprite.getTop()+sprite.getHeight()+15);
           g2.setColor(Color.MAGENTA);
           g2.drawRect((int)sprite.getLeft(),(int)sprite.getTop(),sprite.getWidth(),sprite.getHeight());
+          c++;
         }
       }
        //text right here 
@@ -355,6 +357,17 @@ public class World
        //1280 - (scoreTotal.length()*26)
        g.setFont(font);
        g.drawString(scoreTotal, 5, 595);
+    }
+    for(int i = 0; i< asteticSprites.size(); i++)
+    {
+      Sprite sprite = asteticSprites.get(i);
+      if(sprite.getImage().equals("otherSprites/square.png"))
+        asteticSprites.remove(i);
+      else
+        g.drawImage(Display.getImage(sprite.getImage(), sprite.getColors()),
+                (int)sprite.getLeft(),
+                (int)sprite.getTop(),
+                sprite.getWidth(), sprite.getHeight(), null);
     }
   }
 }

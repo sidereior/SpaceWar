@@ -10,4 +10,5 @@ public interface Stratagy
   Location shoot(Boolean canShoot);
 
 
+
 }
