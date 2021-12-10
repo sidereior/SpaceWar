@@ -5,10 +5,10 @@ import java.awt.geom.AffineTransform;
 
 public class World
 {
-  final String treasureImageName = "gem.png";
-  final String bulletImageName = "bullet.png";
-  final String[] shipImageNames = new String[]{"spaceship-blue.png","spaceship-salmon.png","spaceship-yellow.png",
-           "spaceship-pink.png","spaceship-red.png","spaceship-babyblue.png","spaceship-green.png","EmbeddedImage.png"};
+  final String treasureImageName = "otherSprites/gem.png";
+  final String bulletImageName = "otherSprites/bullet.png";
+  final String[] shipImageNames = new String[]{"otherSprites/spaceship-blue.png", "otherSprites/spaceship-salmon.png", "otherSprites/spaceship-yellow.png",
+          "otherSprites/spaceship-pink.png", "otherSprites/spaceship-red.png", "otherSprites/spaceship-babyblue.png", "otherSprites/spaceship-green.png", "otherSprites/EmbeddedImage.png"};
   private final int width;
   private final int height;
   private final int playerSize = 30;
@@ -248,14 +248,14 @@ public class World
 
     for (Triplet<Integer,Integer,Integer> star: stars)
     {
-      g.drawImage(Display.getImage("star.png", null),
+      g.drawImage(Display.getImage("otherSprites/star.png", null),
               star.getFirst(),star.getSecond(),star.getThird(),star.getThird(), null);
     }
 
     for(int i = 0; i< asteticSprites.size(); i++)
     {
       Sprite sprite = asteticSprites.get(i);
-      if(sprite.getImage().equals("square.png"))
+      if(sprite.getImage().equals("otherSprites/square.png"))
         asteticSprites.remove(i);
       else
         g.drawImage(Display.getImage(sprite.getImage(), sprite.getColors()),
