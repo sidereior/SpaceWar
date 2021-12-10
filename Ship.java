@@ -1,10 +1,8 @@
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Ship extends Sprite {
     final double speed = 2;
     final int radius = 150;
-
     private boolean jiggly = false;
     private int jiggs = 1;
     private double theta = 0;

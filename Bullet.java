@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Bullet extends Sprite{
+public class Bullet extends Sprite {
 
     final double speed = 12;
 
@@ -8,7 +8,7 @@ public class Bullet extends Sprite{
     private String playerImage;
 
 
-    Bullet(double left, double top, int width, int height, String image,String playerImage, ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots, double theta)
+    Bullet(double left, double top, int width, int height, String image, String playerImage, ArrayList<Location> playersSpots, ArrayList<Location> treasureSpots, double theta)
     {
         super(left, top, width, height, image, null, playersSpots, treasureSpots);
 

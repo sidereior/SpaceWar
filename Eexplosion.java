@@ -2,8 +2,8 @@ import java.awt.*;
 
 public class Eexplosion extends Sprite {
 
-    private final String[] images = new String[]{"explosions/1.png","explosions/2.png","explosions/3.png","explosions/4.png","explosions/5.png"
-            ,"explosions/6.png","explosions/7.png","explosions/8.png","explosions/9.png", "otherSprites/square.png"};
+    private final String[] images = new String[]{"explosions/1.png", "explosions/2.png", "explosions/3.png", "explosions/4.png", "explosions/5.png"
+            , "explosions/6.png", "explosions/7.png", "explosions/8.png", "explosions/9.png", "otherSprites/square.png"};
 
     private double spriteIndex = 0;
     private int time;

@@ -8,8 +8,8 @@ public class World
   final String treasureImageName = "otherSprites/gem.png";
   final String bulletImageName = "otherSprites/bullet.png";
   final String[] shipImageNames = new String[]{"otherSprites/spaceship-blue.png", "otherSprites/spaceship-salmon.png", "otherSprites/spaceship-yellow.png",
-          "otherSprites/spaceship-pink.png", "otherSprites/spaceship-red.png", "otherSprites/spaceship-babyblue.png", "otherSprites/spaceship-green.png","otherSprites/spaceship-blue.png", "otherSprites/spaceship-salmon.png", "otherSprites/spaceship-yellow.png",
-          "otherSprites/spaceship-pink.png", "otherSprites/spaceship-red.png", "otherSprites/spaceship-babyblue.png", "otherSprites/spaceship-green.png","otherSprites/spaceship-blue.png", "otherSprites/spaceship-salmon.png", "otherSprites/spaceship-yellow.png",
+          "otherSprites/spaceship-pink.png", "otherSprites/spaceship-red.png", "otherSprites/spaceship-babyblue.png", "otherSprites/spaceship-green.png", "otherSprites/spaceship-blue.png", "otherSprites/spaceship-salmon.png", "otherSprites/spaceship-yellow.png",
+          "otherSprites/spaceship-pink.png", "otherSprites/spaceship-red.png", "otherSprites/spaceship-babyblue.png", "otherSprites/spaceship-green.png", "otherSprites/spaceship-blue.png", "otherSprites/spaceship-salmon.png", "otherSprites/spaceship-yellow.png",
           "otherSprites/spaceship-pink.png", "otherSprites/spaceship-red.png", "otherSprites/spaceship-babyblue.png", "otherSprites/spaceship-green.png", "otherSprites/EmbeddedImage.png"};
   private final int width;
   private final int height;
@@ -87,7 +87,7 @@ public class World
 
   public void makeBullet(double x, double y, double a, double b, String playerImage)
   {
-    sprites.add(new Bullet(x,y,15,15,bulletImageName,playerImage,null,null,Math.atan2(b-y,a-x)));
+    sprites.add(new Bullet(x,y,50,50,bulletImageName,playerImage,null,null,Math.atan2(b-y,a-x)));
   }
 
 
